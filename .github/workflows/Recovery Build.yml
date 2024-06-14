@@ -4,13 +4,17 @@ on:
   workflow_dispatch:
     inputs:
       MANIFEST_URL:
-        description: 'MANIFEST_URL (if want to use SSH keys, use git@github.com:XXXXX)'
+        description: 'MANIFEST_URL'
         required: true
-        default: 'https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp'
-      MANIFEST_BRANCH:
-        description: 'MANIFEST_BRANCH'
+        default: 'https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp.git'
+      LIBRARY_BRANCH:
+        description: 'LIBRARY_BRANCH'
         required: true
         default: 'twrp-12.1'
+        type: choice
+        options:
+        - twrp-11
+        - twrp-12.1
       DEVICE_TREE_URL:
         description: 'DEVICE_TREE_URL'
         required: true
@@ -23,24 +27,35 @@ on:
         description: 'DEVICE_PATH'
         required: true
         default: 'device/blackview/BV9300'
-      COMMON_TREE_URL:
-        description: 'COMMON_TREE_URL (if no common tree, leave blank)'
-        required: false
-      COMMON_PATH:
-        description: 'COMMON_PATH (if no common tree, leave blank)'
-        required: false
       DEVICE_NAME:
         description: 'DEVICE_NAME'
         required: true
         default: 'BV9300'
-      MAKEFILE_NAME:
-        description: 'MAKEFILE_NAME'
+      DEVICE_TYPE:
+        description: 'DEVICE_TYPE'
         required: true
-        default: 'twrp_BV9300'
-      BUILD_TARGET:
-        description: 'BUILD_TARGET'
+        default: 'recovery'
+        type: choice
+        options:
+        - recovery
+        - boot
+        - vendorboot
+      UPLOAD:
+        description: 'Upload to Telegram Bot (true or false)'
         required: true
-        default: 'vendorboot'
+        default: 'yes'
+        type: choice
+        options:
+        - yes
+        - no
+      PUBLISH:
+        description: 'Publish to GitHub (true or false)'
+        required: true
+        default: 'yes'
+        type: choice
+        options:
+        - yes
+        - no
 
 jobs:
   build:
