@@ -96,7 +96,7 @@ jobs:
         chmod a+x ~/bin/repo
         sudo ln -sf ~/bin/repo /usr/bin/repo
 
-    - name: Init Repo
+    - name: Initialize repo
       run: |
         mkdir workspace
         cd workspace
@@ -108,11 +108,10 @@ jobs:
           
     - name: Repo Sync
       run: |
-        cd ${GITHUB_WORKSPACE}/workspace
-        repo sync -j$(nproc --all)
-        ls -al
-
-    - name: Clone Device Tree
+        repo sync -j$(nproc --all) --force-sync
+      working-directory: workspace
+      
+    - name: Clone device tree
       run: |
         cd ${GITHUB_WORKSPACE}/workspace
         git clone ${{ github.event.inputs.DEVICE_TREE_URL }} -b ${{ github.event.inputs.DEVICE_TREE_BRANCH }} ./${{ github.event.inputs.DEVICE_PATH }}
@@ -178,3 +177,4 @@ jobs:
           Device: ${{ github.event.inputs.DEVICE_NAME }}
       env:
         GITHUB_TOKEN: ${{ secrets.TEST }}
+
