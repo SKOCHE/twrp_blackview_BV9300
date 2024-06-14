@@ -18,7 +18,7 @@ on:
       DEVICE_TREE_URL:
         description: 'DEVICE_TREE_URL'
         required: true
-        default: https://github.com/SKOCHE/twrp_blackview_BV9300
+        default: 'https://github.com/SKOCHE/twrp_blackview_BV9300'
       DEVICE_TREE_BRANCH:
         description: 'DEVICE_TREE_BRANCH'
         required: true
